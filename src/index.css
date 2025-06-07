@@ -1,1 +1,12 @@
 @import "tailwindcss";
+
+@theme {
+  --color-custom-grey: #050505;
+  --color-custom-greypurple: #3e3047;
+  --color-custom-rpurple: #9c20ee;
+  --color-custom-buttonpurple: #66427e;
+}
+
+@utility smooth-transition {
+  transition: all 0.3s ease-in-out;
+}

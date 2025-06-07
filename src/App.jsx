@@ -1,35 +1,45 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState } from "react";
+import Sidebar from "./components/Sidebar";
+import Searchbar from "./components/Searchbar";
 
-function App() {
-  const [count, setCount] = useState(0)
+const App = () => {
+  const [isDarkMode, setIsDarkMode] = useState(true);
+  const toggleTheme = () => setIsDarkMode(!isDarkMode);
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div
+      className={`smooth-transition relative h-screen w-full flex flex-col justify-between overflow-hidden ${
+        isDarkMode
+          ? "bg-gradient-to-t from-custom-greypurple to-black"
+          : "bg-white"
+      }`}
+    >
+      <div className="flex flex-1 flex-row h-full space-x-4 pr-4">
+        <Sidebar isDarkMode={isDarkMode} />
+        <div className="w-full p-4 pt-6 pl-6 space-y-4">
+          <div className="flex justify-end items-end">
+            <Searchbar isDarkMode={isDarkMode} />
+          </div>
+          <div className="flex flex-1 w-full">
+            <div
+              className={`smooth-transition pt-10 font-bold text-2xl ${
+                isDarkMode ? "text-white" : "text-white"
+              }`}
+            >
+              Recent Journal
+            </div>
+          </div>
+          <div
+            className={`smooth-transition w-full min-h-[52rem] ring-1 ring-white/10 rounded-2xl shadow-lg ${
+              isDarkMode ? "bg-custom-grey/75 backdrop-blur-lg" : "bg-white"
+            }`}
+          >
+            meow
+          </div>
+        </div>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    </div>
+  );
+};
 
-export default App
+export default App;
