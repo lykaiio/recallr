@@ -1,19 +1,27 @@
 import React from "react";
 
-const SecondaryButton = ({ text, icon: Icon, isDarkMode, onClick }) => {
+const SecondaryButton = ({
+  text,
+  icon: Icon,
+  isDarkMode,
+  collapsed,
+  onClick,
+}) => {
   return (
     <button
       onClick={onClick}
-      className={`smooth-transition w-[8rem] p-2 font-bold flex items-center justify-center gap-2 rounded-xl
+      className={`smooth-transition w-full p-2 font-bold flex items-center ${
+        collapsed ? "justify-center" : "justify-start pl-6"
+      } gap-2 rounded-xl
         ${
           isDarkMode
-            ? "text-white bg-custom-grey/40 hover:text-purple-400"
+            ? "text-white hover:text-purple-400"
             : "text-black bg-white hover:text-purple-600"
         }
       `}
     >
       {Icon && <Icon className="w-5 h-5" />}
-      {text}
+      {!collapsed && text}
     </button>
   );
 };
