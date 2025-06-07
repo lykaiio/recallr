@@ -1,4 +1,6 @@
 import React from "react";
+import { Home, Notebook, BarChart3 } from "lucide-react";
+import SecondaryButton from "../components/SecondaryButton";
 
 const Sidebar = ({ isDarkMode }) => {
   return (
@@ -9,7 +11,7 @@ const Sidebar = ({ isDarkMode }) => {
           : "bg-white"
       }`}
     >
-      <div className="flex flex-1 h-full flex-col p-5 gap-y-4">
+      <div className="flex h-full flex-col p-5 gap-y-6">
         <div
           className={`smooth-transition text-4xl font-bold ${
             isDarkMode
@@ -19,13 +21,29 @@ const Sidebar = ({ isDarkMode }) => {
         >
           Recallr
         </div>
-        <button
-          className={`smooth-transition w-full p-2 rounded-2xl font-bold ${
-            isDarkMode ? "bg-custom-rpurple/55 text-white" : "bg-white"
-          }`}
-        >
-          Add Journal
-        </button>
+        <div className="flex flex-col items-center gap-y-4 mt-4">
+          <button
+            className={`smooth-transition w-[15rem] p-2 rounded-2xl font-bold hover:shadow-md ${
+              isDarkMode
+                ? "bg-custom-rpurple text-white hover:bg-custom-rpurple/80"
+                : "bg-white text-black hover:bg-purple-100 hover:text-purple-900"
+            }`}
+          >
+            Add Journal
+          </button>
+        </div>
+
+        <SecondaryButton text="Home" icon={Home} isDarkMode={isDarkMode} />
+        <SecondaryButton
+          text="Journal"
+          icon={Notebook}
+          isDarkMode={isDarkMode}
+        />
+        <SecondaryButton
+          text="Insights"
+          icon={BarChart3}
+          isDarkMode={isDarkMode}
+        />
       </div>
     </div>
   );
