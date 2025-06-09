@@ -3,18 +3,19 @@ import { motion, AnimatePresence } from "framer-motion";
 
 import Sidebar from "./components/Sidebar";
 import Searchbar from "./components/Searchbar";
-import ThemedButton from "./components/ThemedButton";
-import JournalLog from "./components/JournalLog";
 import MicButton from "./components/MicButton";
 
-import journalEntries from "./data/journalEntries";
+import FilterBar from "./components/FilterBar";
+import EntryList from "./components/EntryList";
+import DeleteToolbar from "./components/DeleteToolbar";
 
-import { Sparkles, Smile, Frown, Brain } from "lucide-react";
+import journalEntries from "./data/journalEntries";
 
 const App = () => {
   const [isDarkMode, setIsDarkMode] = useState(true);
   const [expandedEntry, setExpandedEntry] = useState(null);
   const [filter, setFilter] = useState("all");
+  const [selectedEntryIds, setSelectedEntryIds] = useState([]);
 
   const toggleTheme = () => setIsDarkMode(!isDarkMode);
 
@@ -27,7 +28,7 @@ const App = () => {
     <div
       className={`smooth-transition relative h-screen w-full flex flex-col justify-between overflow-hidden ${
         isDarkMode
-          ? "bg-gradient-to-t from-custom-greypurple to-black"
+          ? "bg-gradient-to-t from-custom-greypurple to-black/98"
           : "bg-white"
       }`}
     >
@@ -55,7 +56,7 @@ const App = () => {
           <div className="flex justify-between pb-4 items-center w-full pt-6">
             <div
               className={`smooth-transition font-bold text-2xl ${
-                isDarkMode ? "text-white/80" : "text-white"
+                isDarkMode ? "text-white/80" : "text-black"
               }`}
             >
               {expandedEntry ? expandedEntry.date : "Recent Journal"}
@@ -69,35 +70,11 @@ const App = () => {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
                   transition={{ duration: 0.3 }}
-                  className="flex gap-2"
                 >
-                  <ThemedButton
-                    text={"All"}
-                    icon={Sparkles}
+                  <FilterBar
+                    filter={filter}
+                    setFilter={setFilter}
                     isDarkMode={isDarkMode}
-                    onClick={() => setFilter("all")}
-                    active={filter === "all"}
-                  />
-                  <ThemedButton
-                    text={"Happy"}
-                    icon={Smile}
-                    isDarkMode={isDarkMode}
-                    onClick={() => setFilter("happy")}
-                    active={filter === "happy"}
-                  />
-                  <ThemedButton
-                    text={"Sad"}
-                    icon={Frown}
-                    isDarkMode={isDarkMode}
-                    onClick={() => setFilter("sad")}
-                    active={filter === "sad"}
-                  />
-                  <ThemedButton
-                    text={"Reflective"}
-                    icon={Brain}
-                    isDarkMode={isDarkMode}
-                    onClick={() => setFilter("reflective")}
-                    active={filter === "reflective"}
                   />
                 </motion.div>
               )}
@@ -105,28 +82,28 @@ const App = () => {
           </div>
 
           <div
-            className={`smooth-transition p-4 w-full h-[49rem] ring-2 ring-white/10 rounded-2xl shadow-lg overflow-y-auto space-y-4 ${
-              isDarkMode ? "bg-custom-grey/75 backdrop-blur-lg" : "bg-white"
+            className={`smooth-transition p-4 w-full h-[49rem] ring-2 ring-white/15 rounded-2xl shadow-lg overflow-y-auto space-y-4 ${
+              isDarkMode ? "bg-custom-grey/70 backdrop-blur-lg" : "bg-white"
             }`}
           >
-            {filteredEntries.map((entry, index) => {
-              if (expandedEntry && expandedEntry !== entry) return null;
+            {!expandedEntry && (
+              <DeleteToolbar
+                isDarkMode={isDarkMode}
+                selectedEntryIds={selectedEntryIds}
+                onDelete={() =>
+                  console.log("Delete selected:", selectedEntryIds)
+                }
+              />
+            )}
 
-              return (
-                <JournalLog
-                  key={index}
-                  {...entry}
-                  isDarkMode={isDarkMode}
-                  isExpanded={expandedEntry === entry}
-                  onClick={() =>
-                    expandedEntry === entry
-                      ? setExpandedEntry(null)
-                      : setExpandedEntry(entry)
-                  }
-                  onBack={() => setExpandedEntry(null)}
-                />
-              );
-            })}
+            <EntryList
+              entries={filteredEntries}
+              expandedEntry={expandedEntry}
+              setExpandedEntry={setExpandedEntry}
+              isDarkMode={isDarkMode}
+              selectedEntryIds={selectedEntryIds}
+              setSelectedEntryIds={setSelectedEntryIds}
+            />
           </div>
         </div>
       </div>

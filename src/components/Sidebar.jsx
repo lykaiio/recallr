@@ -20,7 +20,7 @@ const Sidebar = ({ isDarkMode }) => {
         collapsed ? "w-[6rem]" : "w-[30rem]"
       } ${
         isDarkMode
-          ? "bg-custom-grey/75 ring-1 ring-white/10 backdrop-blur-lg"
+          ? "bg-custom-grey/75 ring-2 ring-white/15 backdrop-blur-lg"
           : "bg-white"
       }`}
     >
@@ -37,7 +37,7 @@ const Sidebar = ({ isDarkMode }) => {
 
         <div className="flex flex-col items-center gap-y-4 mt-4">
           <button
-            className={`smooth-transition w-full p-2 rounded-2xl font-bold hover:shadow-md flex items-center justify-center ${
+            className={`smooth-transition overflow-hidden w-full p-2 rounded-2xl font-bold hover:shadow-md flex items-center justify-center ${
               isDarkMode
                 ? "bg-custom-rpurple text-white hover:bg-custom-rpurple/80"
                 : "bg-white text-black hover:bg-purple-100 hover:text-purple-900"
@@ -75,15 +75,19 @@ const Sidebar = ({ isDarkMode }) => {
             isDarkMode ? "bg-white/10" : "bg-black/10"
           }`}
         />
+
         <SecondaryButton
           text="Settings"
           icon={Settings}
           isDarkMode={isDarkMode}
           collapsed={collapsed}
         />
+
         <button
           onClick={toggleCollapsed}
-          className={`smooth-transition mt-2 p-2 rounded-full self-end ${
+          className={`smooth-transition mt-2 p-2 rounded-full ${
+            collapsed ? "self-center" : "self-end"
+          } ${
             isDarkMode
               ? "bg-white/10 text-white hover:bg-white/20"
               : "bg-black/10 text-black hover:bg-black/20"
